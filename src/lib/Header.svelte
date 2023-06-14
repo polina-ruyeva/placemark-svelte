@@ -8,6 +8,6 @@
         <TitleBar title={'Evento'} subTitle={'Sign up or Log in'} />
     </div>
     <div class="column">
-        <WelcomeNavigator />
+        <slot />
     </div>
 </div>

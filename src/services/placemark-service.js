@@ -3,7 +3,7 @@ import axios from "axios";
 import { user } from "../stores"
 
 export const placemarkService = {
-    baseUrl: "http://localhost:4000",
+    baseUrl: "http://pandapc:3000",
 
     async login(email, password) {
         try {
@@ -46,6 +46,18 @@ export const placemarkService = {
             return true;
         } catch (error) {
             return false;
+        }
+    },
+
+    reload() {
+        const placemarkCredentials = localStorage.cred;
+        if (placemarkCredentials) {
+            const savedUser = JSON.parse(placemarkCredentials);
+            user.set({
+                email: savedUser.email,
+                token: savedUser.token
+            });
+            axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
         }
     }
 };
