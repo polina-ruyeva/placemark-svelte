@@ -1,38 +1,34 @@
 <script>
+    import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
+
     import Header from '$lib/Header.svelte';
     import WelcomeNavigator from '$lib/WelcomeNavigator.svelte';
+    import MainNavigator from '$lib/MainNavigator.svelte';
+    import WelcomeForm from "$lib/WelcomeForm.svelte";
+
+    let userLoggedIn = false;
+
+    onMount(() => {
+        console.log(localStorage);
+        if (localStorage.cred) {
+            goto('/map');
+        }
+    });
+
+    function navigateToMap() {
+        goto('/map');
+    }
 </script>
 
 <Header>
-    <WelcomeNavigator />
+    {#if userLoggedIn}
+        <MainNavigator on:mapClick={navigateToMap} />
+    {:else}
+        <WelcomeNavigator />
+    {/if}
 </Header>
 
 
-<div class="columns is-vcentered content">
-    <div class="column has-text-centered">
-        <div class="image-container">
-            <img src="/welcome.jpg" alt="welcome" class="blur-image"/>
-            <h1 class="image-text">Welcome to Evento</h1>
-        </div>
-    </div>
-</div>
+<WelcomeForm />
 
-<style>
-    .image-container {
-        position: relative;
-    }
-
-    .image-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-size: 50px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    }
-
-    .blur-image {
-        filter: blur(3px);
-    }
-</style>
