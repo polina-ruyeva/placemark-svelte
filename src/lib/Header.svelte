@@ -5,7 +5,7 @@
 
 <div class="columns is-vcentered">
     <div class="column is-two-thirds">
-        <TitleBar title={'Evento'} subTitle={'Sign up or Log in'} />
+        <TitleBar title={'Evento'} subTitle={'stay connected with events effortlessly'} />
     </div>
     <div class="column">
         <slot />

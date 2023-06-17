@@ -18,7 +18,7 @@
             <div class="title is-3">{title}</div>
             <div class="subtitle is-6">{subTitle}</div>
         </div>
-        <div class="column">
+        <div class="column is-2">
             <i class="fas fa-user fa-3x" style="color:rgb(95, 96, 173)" />
             {#if $user.email}
                 <div class="is-size-7">{$user.email}</div>
@@ -31,7 +31,7 @@
 
 <style>
     .column:last-child {
-        text-align: right;
+        text-align: center;
     }
 </style>
 
