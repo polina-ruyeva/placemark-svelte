@@ -16,9 +16,7 @@
     let map;
 
     onMount(async () => {
-        console.log("onMount");
         map = new LeafletMap("placemark-map", mapConfig);
-        console.log("map created");
         map.showZoomControl();
         map.addLayerGroup("Placemarks");
         map.showLayerControl();
