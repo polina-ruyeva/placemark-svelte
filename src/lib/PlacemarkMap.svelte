@@ -7,6 +7,7 @@
     import { placemarkService } from "../services/placemark-service.js";
     //import { latestEvent } from "../stores";
 
+
     const mapConfig = {
         location: { lat: 49.0139, lng: 12.1016 },
         zoom: 8,

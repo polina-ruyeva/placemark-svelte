@@ -1,8 +1,6 @@
 <script>
     import { onMount } from "svelte";
     import { placemarkService } from "../services/placemark-service.js";
-    import Header from "$lib/Header.svelte";
-    import MainNavigator from "$lib/MainNavigator.svelte";
 
     let events = [];
 
