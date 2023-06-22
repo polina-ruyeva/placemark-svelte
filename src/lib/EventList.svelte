@@ -1,6 +1,8 @@
 <script>
     import { onMount } from "svelte";
     import { placemarkService } from "../services/placemark-service.js";
+    import PlacemarkMap from "./PlacemarkMapList.svelte";
+
 
     let events = [];
 
@@ -32,7 +34,7 @@
 <h1 class="title">Events</h1>
 
 <div class="tile is-ancestor">
-    {#each events as event}
+    {#each events as event (event._id)}
         <div class="tile is-parent">
             <article class="tile is-child box">
                 <h2 class="title is-4">{event.name}</h2>
@@ -45,6 +47,7 @@
                 <p>{event.description}</p>
                 <p>Longitude: {event.lon}</p>
                 <p>Latitude: {event.lat}</p>
+                <PlacemarkMap {event} key={event._id} />
             </article>
         </div>
     {/each}

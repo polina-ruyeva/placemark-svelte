@@ -24,11 +24,11 @@ function formatDate(dateString) {
         {#if event}
             <h1 class="title">{event.name}</h1>
             <div class="content">
-                <p><strong>Datum:</strong> {formatDate(event.date)}</p>
-                <p><strong>Beschreibung:</strong> {event.description}</p>
+                <p><strong>Date:</strong> {formatDate(event.date)}</p>
+                <p><strong>Description:</strong> {event.description}</p>
             </div>
         {:else}
-            <p>Lade Event...</p>
+            <p>Load Event...</p>
         {/if}
     </div>
 </main>
