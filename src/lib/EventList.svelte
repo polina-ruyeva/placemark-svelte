@@ -61,17 +61,24 @@
 <h1 class="title">Events</h1>
 
 
-<label class="label" for="category-select">Select Category:</label>
-<div class="control">
-    <div class="select">
-        <select id="category-select" class="input" bind:value={selectedCategory} on:change={updateList}>
-            <option value="">All</option>
-            {#each categories as category}
-                <option value="{category._id}">{category.name}</option>
-            {/each}
-        </select>
+
+<div class="field is-grouped">
+    <div class="control">
+        <label class="label" for="category-select">Select Category:</label>
+    </div>
+    <div class="control">
+        <div class="select">
+            <select id="category-select" class="input" bind:value={selectedCategory} on:change={updateList}>
+                <option value="">All</option>
+                {#each categories as category}
+                    <option value="{category._id}">{category.name}</option>
+                {/each}
+            </select>
+        </div>
     </div>
 </div>
+
+
 
 <div class="tile is-ancestor">
     {#each filteredEvents as event (event._id)}
