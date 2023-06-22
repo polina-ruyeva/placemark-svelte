@@ -3,6 +3,7 @@ import { onMount } from "svelte";
 import { page } from "$app/stores";
 
 import {placemarkService} from "../services/placemark-service.js";
+import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
 let event;
 
 onMount(async () => {
@@ -24,8 +25,20 @@ function formatDate(dateString) {
         {#if event}
             <h1 class="title">{event.name}</h1>
             <div class="content">
-                <p><strong>Date:</strong> {formatDate(event.date)}</p>
-                <p><strong>Description:</strong> {event.description}</p>
+                <div class="columns">
+                    <div class="column is-three-fifths">
+                        <p class="subtitle">{formatDate(event.date)}</p>
+                        <p>{event.description}</p>
+                    </div>
+                    {#if event.image}
+                        <div class="column">
+                            <figure class="image">
+                                <img class="event-image" src="{event.image}" alt="Event Image">
+                            </figure>
+                        </div>
+                    {/if}
+                </div>
+                <PlacemarkMap {event} key={event._id} />
             </div>
         {:else}
             <p>Load Event...</p>

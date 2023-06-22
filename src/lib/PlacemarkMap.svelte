@@ -23,9 +23,13 @@
     });
 
     function addEventMarker(map, event) {
-        const eventStr = `${event.name}: ${event.description}`;
+        const eventStr = `<a href="${getEventLink(event)}"> ${event.name}: <br> ${event.description}</a>`;
         map.addMarker({ lat: event.lat, lng: event.lon }, eventStr, "Events");
         map.moveTo(8, { lat: event.lat, lng: event.lon });
+    }
+
+    function getEventLink(event) {
+        return(`/event/${event._id}`);
     }
 </script>
 

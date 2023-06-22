@@ -42,6 +42,10 @@
         dispatch("updateList", filteredEvents); // Dispatch the updated list to the parent component
     }
 
+    let addEvent;
+    let newEventDate;
+    let newEventName;
+
 </script>
 
 <style>
@@ -92,8 +96,6 @@
                     </figure>
                 {/if}
                 <p>{event.description}</p>
-                <p>Longitude: {event.lon}</p>
-                <p>Latitude: {event.lat}</p>
                 <PlacemarkMap {event} key={event._id} />
             </article>
         </div>
