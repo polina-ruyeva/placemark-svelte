@@ -6,7 +6,6 @@
 
     onMount(async () => {
         events = await placemarkService.getEvents();
-        console.log(events);
     });
 
     function formatDate(dateString) {
@@ -16,28 +15,37 @@
     }
 </script>
 
+<style>
+    .tile {
+        margin-bottom: 1rem;
+    }
+
+    .event-image {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+    }
+</style>
 
 <h1 class="title">Events</h1>
 
-<table class="table is-fullwidth">
-    <thead>
-        <tr>
-            <th>Event</th>
-            <th>Description</th>
-            <th>Longitude</th>
-            <th>Latitude</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="tile is-ancestor">
     {#each events as event}
-        <tr>
-            <td>{event.name}</td>
-            <td>{event.description}</td>
-            <td>{event.lon}</td>
-            <td>{event.lat}</td>
-            <td>{formatDate(event.date)}</td>
-        </tr>
+        <div class="tile is-parent">
+            <article class="tile is-child box">
+                <h2 class="title is-4">{event.name}</h2>
+                <p class="subtitle">{formatDate(event.date)}</p>
+                {#if event.image}
+                    <figure class="image">
+                        <img class="event-image" src="{event.image}" alt="Event Image">
+                    </figure>
+                {/if}
+                <p>{event.description}</p>
+                <p>Longitude: {event.lon}</p>
+                <p>Latitude: {event.lat}</p>
+            </article>
+        </div>
     {/each}
-    </tbody>
-</table>
+</div>
