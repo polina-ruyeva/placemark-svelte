@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import * as L from "leaflet";
+import {goto} from "$app/navigation";
 
 export class LeafletMap {
     imap = {};
@@ -31,6 +32,10 @@ export class LeafletMap {
             minZoom: descriptor.minZoom,
             zoomControl: false,
             layers: [defaultLayer]
+        });
+
+        this.imap.addEventListener("click", (e) => {
+            goto("/event/new?lat=" + e.latlng.lat + "&lon=" + e.latlng.lng);
         });
     }
 
@@ -88,4 +93,5 @@ export class LeafletMap {
         let hiddenMethodMap = this.imap;
         hiddenMethodMap._onResize();
     }
+
 }

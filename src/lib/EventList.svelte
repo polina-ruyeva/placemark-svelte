@@ -37,14 +37,10 @@
         }
     });
 
-    function updateList() { // Filter events based on selected category
+    function updateList() {
         filteredEvents = filterEvents();
-        dispatch("updateList", filteredEvents); // Dispatch the updated list to the parent component
+        dispatch("updateList", filteredEvents);
     }
-
-    let addEvent;
-    let newEventDate;
-    let newEventName;
 
 </script>
 
@@ -81,8 +77,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class="tile is-ancestor">
     {#each filteredEvents as event (event._id)}

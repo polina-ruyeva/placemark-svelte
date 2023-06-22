@@ -3,6 +3,7 @@
     import { LeafletMap } from "../services/leaflet-map";
     import { onMount } from "svelte";
     import { placemarkService } from "../services/placemark-service.js";
+    import {goto} from "$app/navigation";
 
     const mapConfig = {
         location: { lat: 49.0139, lng: 12.1016 },
@@ -20,6 +21,7 @@
         events.forEach((event) => {
             addEventMarker(map, event);
         });
+
     });
 
     function addEventMarker(map, event) {
@@ -31,6 +33,10 @@
     function getEventLink(event) {
         return(`/event/${event._id}`);
     }
+
+
+
+
 </script>
 
 <div class="box" id="placemark-map" style="height: 75vh" />
