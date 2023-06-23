@@ -35,6 +35,7 @@
 
 
 <h2 class="title">New Event</h2>
+<p class="subtitle">Fill in the information to create new event</p>
 
 <div class="box">
     <form on:submit={handleSubmit}>
@@ -45,30 +46,27 @@
             </div>
         </div>
 
+        <div class="field is-grouped">
+            <div class="control">
+                <label class="label">Date</label>
+                <input class="input" type="date" bind:value={event.date} required />
+            </div>
+            <div class="control">
+                <label class="label">Category</label>
+                <div class="select">
+                    <select bind:value={event.categoryid}>
+                        {#each categories as category}
+                            <option value={category._id}>{category.name}</option>
+                        {/each}
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="field">
             <label class="label">Description</label>
             <div class="control">
                 <textarea class="textarea" bind:value={event.description} required></textarea>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Date</label>
-            <div class="control">
-                <input class="input" type="date" bind:value={event.date} required />
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Category</label>
-            <div class="control">
-                <div class="select">
-                    <select bind:value={event.categoryid}>
-                        {#each categories as category}
-                            <option value={category}>{category}</option>
-                        {/each}
-                    </select>
-                </div>
             </div>
         </div>
 
