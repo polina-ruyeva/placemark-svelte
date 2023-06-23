@@ -34,9 +34,6 @@
         return(`/event/${event._id}`);
     }
 
-
-
-
 </script>
 
 <div class="box" id="placemark-map" style="height: 75vh" />

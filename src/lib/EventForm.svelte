@@ -20,7 +20,7 @@ function formatDate(dateString) {
 </script>
 
 
-<main class="box">
+<main class="box" style="padding: 50px;">
     <div class="container">
         {#if event}
             <h1 class="title">{event.name}</h1>
