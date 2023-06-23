@@ -86,5 +86,14 @@ export const placemarkService = {
         } catch (error) {
             return [];
         }
+    },
+
+    async createEvent(event) {
+        try {
+            const response = await axios.post(this.baseUrl + "/api/categories/{id}/events", event); //TODO
+            return response.data;
+        } catch (error) {
+            return [];
+        }
     }
 };
