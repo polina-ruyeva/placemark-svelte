@@ -90,9 +90,16 @@ export const placemarkService = {
 
     async createEvent(event) {
         try {
-            console.log("createEvent");
-            console.log(event);
             const response = await axios.post(this.baseUrl + "/api/categories/" + event.categoryid + "/events", event); //TODO
+            return response.data;
+        } catch (error) {
+            return [];
+        }
+    },
+
+    async deleteEvent(id){
+        try {
+            const response = await axios.delete(this.baseUrl + "/api/events/" + id);
             return response.data;
         } catch (error) {
             return [];

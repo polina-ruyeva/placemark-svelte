@@ -12,10 +12,7 @@
 
     onMount(async () => {
         events = await placemarkService.getEvents();
-        console.log("Events:");
-        console.log(events);
         categories = await placemarkService.getCategories();
-        console.log(categories);
         filteredEvents = events;
     });
 
