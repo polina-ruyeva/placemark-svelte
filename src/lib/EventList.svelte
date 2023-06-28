@@ -2,6 +2,7 @@
     import {afterUpdate, createEventDispatcher, onMount} from "svelte";
     import { placemarkService } from "../services/placemark-service.js";
     import PlacemarkMap from "./PlacemarkMapList.svelte";
+    import {goto} from "$app/navigation";
     const dispatch = createEventDispatcher();
 
     let events = [];
@@ -11,10 +12,7 @@
 
     onMount(async () => {
         events = await placemarkService.getEvents();
-        console.log("Events:");
-        console.log(events);
         categories = await placemarkService.getCategories();
-        console.log(categories);
         filteredEvents = events;
     });
 
@@ -37,9 +35,13 @@
         }
     });
 
-    function updateList() { // Filter events based on selected category
+    function updateList() {
         filteredEvents = filterEvents();
-        dispatch("updateList", filteredEvents); // Dispatch the updated list to the parent component
+        dispatch("updateList", filteredEvents);
+    }
+
+    function goToEventPage(eventId) {
+        goto(`/event/${eventId}`);
     }
 
 </script>
@@ -78,13 +80,20 @@
     </div>
 </div>
 
-
-
 <div class="tile is-ancestor">
     {#each filteredEvents as event (event._id)}
         <div class="tile is-parent">
             <article class="tile is-child box">
-                <h2 class="title is-4">{event.name}</h2>
+                <div class="columns">
+                    <div class="column">
+                        <h2 class="title is-4">{event.name}</h2>
+                    </div>
+                    <div class="column is-narrow">
+                        <a on:click={() => goToEventPage(event._id)}>
+                            <i class="fas fa-arrow-circle-right fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
                 <p class="subtitle">{formatDate(event.date)}</p>
                 {#if event.image}
                     <figure class="image">
@@ -92,8 +101,6 @@
                     </figure>
                 {/if}
                 <p>{event.description}</p>
-                <p>Longitude: {event.lon}</p>
-                <p>Latitude: {event.lat}</p>
                 <PlacemarkMap {event} key={event._id} />
             </article>
         </div>
