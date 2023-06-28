@@ -2,7 +2,6 @@
     import { onMount } from "svelte";
     import { page } from "$app/stores";
     import { fetchWeather } from "../services/weather-service.js";
-    //import "weather-icons/css/weather-icons.css";
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
