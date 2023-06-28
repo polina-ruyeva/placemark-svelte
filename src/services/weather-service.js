@@ -8,14 +8,14 @@ export async function fetchWeather(lat, lon) {
         const data = await response.json();
 
         if (response.ok) {
-            console.log("Weather responce:", data.weather[0]);
+            console.log("Weather response:", data.weather[0]);
             return data.weather[0];
         } else {
-            console.error("Error responce:", data.message);
+            console.error("Error response:", data.message);
             return null;
         }
     } catch (error) {
-        console.error("Error responce:", error);
+        console.error("Error response:", error);
         return null;
     }
 }

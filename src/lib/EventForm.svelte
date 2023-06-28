@@ -5,7 +5,6 @@
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
-
     import "weather-icons-master/css/weather-icons.css";
 
 let event;
@@ -39,12 +38,6 @@ let event;
     }
 
 </script>
-
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/weather-icons/css/weather-icons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/weather-icons/css/weather-icons-wind.min.css">
-
-</head>
 
 <main class="box" style="padding: 50px;">
     <div class="container">
