@@ -11,7 +11,7 @@
 
 <div class="box">
     <div class="columns m-1">
-        <div class="column is-2">
+        <div class="column ml-5 is-2">
             <i class="fas fa-vihara fa-4x" style="color:rgb(95, 96, 173)" on:click={redirectToHome} />
         </div>
         <div class="column">
