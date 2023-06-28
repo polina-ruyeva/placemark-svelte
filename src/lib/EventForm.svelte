@@ -5,7 +5,7 @@
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
-    import "weather-icons-master/css/weather-icons.css";
+    import "./weather-icons-master/css/weather-icons.css";
 
 let event;
     let weather;
