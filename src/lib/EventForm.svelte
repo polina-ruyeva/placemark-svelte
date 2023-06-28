@@ -1,14 +1,24 @@
 <script>
     import { onMount } from "svelte";
     import { page } from "$app/stores";
-
+    import { fetchWeather } from "../services/weather-service.js";
+    //import "weather-icons/css/weather-icons.css";
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
-    let event;
+
+    import "weather-icons-master/css/weather-icons.css";
+
+let event;
+    let weather;
 
     onMount(async () => {
         event = await placemarkService.getEvent($page.params.eventId);
+
+        if (event) {
+            weather = await fetchWeather(event.lat, event.lon);
+
+        }
     });
 
     function formatDate(dateString) {
@@ -31,6 +41,11 @@
 
 </script>
 
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/weather-icons/css/weather-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/weather-icons/css/weather-icons-wind.min.css">
+
+</head>
 
 <main class="box" style="padding: 50px;">
     <div class="container">
@@ -41,9 +56,11 @@
                     <div class="column is-three-fifths">
                         <p class="subtitle">{formatDate(event.date)}</p>
                         <p>{event.description}</p>
-                        <button on:click={deleteEvent} class="button is-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        {#if event && weather}
+                            <h2 class="title is-4"> {weather.description}</h2>
+                            <i class="wi wi-owm-{weather.id} weather-icon is-size-1"></i>
+                        {/if}
+
                     </div>
                     {#if event.image}
                         <div class="column">
@@ -59,4 +76,10 @@
             <p>Load Event...</p>
         {/if}
     </div>
+
 </main>
+
+<button on:click={deleteEvent} class="button is-danger">
+    <i class="fas fa-trash" style="margin-right: 5px;"></i>
+    <span style="font-weight: normal;">Danger</span>
+</button>
