@@ -5,10 +5,17 @@
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
+
+    import { fetchWeather } from "../services/weather-service.js";
     let event;
+    let weather;
 
     onMount(async () => {
         event = await placemarkService.getEvent($page.params.eventId);
+
+        if (event) {
+            weather = await fetchWeather(event.lat, event.lon);
+        }
     });
 
     function formatDate(dateString) {
@@ -41,9 +48,12 @@
                     <div class="column is-three-fifths">
                         <p class="subtitle">{formatDate(event.date)}</p>
                         <p>{event.description}</p>
-                        <button on:click={deleteEvent} class="button is-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        {#if event && weather}
+                            <div class="notification is-dark is-primary">
+                                <h2 class="title is-4">{weather.description}</h2>
+                                <img src="http://openweathermap.org/img/wn/{weather.icon}@2x.png">
+                            </div>
+                        {/if}
                     </div>
                     {#if event.image}
                         <div class="column">
@@ -60,3 +70,8 @@
         {/if}
     </div>
 </main>
+
+<button on:click={deleteEvent} class="button is-danger">
+    <i class="fas fa-trash" style="margin-right: 5px;"></i>
+    <span style="font-weight: normal;">Danger</span>
+</button>
