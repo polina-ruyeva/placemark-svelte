@@ -7,9 +7,10 @@ export async function fetchWeather(lat, lon) {
         const response = await fetch(apiUrl);
         const data = await response.json();
 
+        console.log("Weather response:", data);
+
         if (response.ok) {
-            console.log("Weather response:", data.weather[0]);
-            return data.weather[0];
+            return data;
         } else {
             console.error("Error response:", data.message);
             return null;
