@@ -5,10 +5,18 @@
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
+
+    import { fetchWeather } from "../services/weather-service.js";
     let event;
+    let weatherData;
 
     onMount(async () => {
         event = await placemarkService.getEvent($page.params.eventId);
+
+        if (event) {
+            weatherData = await fetchWeather(event.lat, event.lon);
+
+        }
     });
 
     function formatDate(dateString) {
@@ -41,9 +49,25 @@
                     <div class="column is-three-fifths">
                         <p class="subtitle">{formatDate(event.date)}</p>
                         <p>{event.description}</p>
-                        <button on:click={deleteEvent} class="button is-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        {#if event && weatherData}
+                            <div class="box weather-box">
+                                <div class="columns">
+                                    <div class="column">
+                                        <h2 class="title is-4">{weatherData.weather[0].description}</h2>
+                                        <img src="http://openweathermap.org/img/wn/{weatherData.weather[0].icon}@2x.png">
+                                    </div>
+                                    <div class="column">
+                                        <h2 class="title is-4">Wind:</h2>
+                                        <p>Speed: {weatherData.wind.speed} m/s</p>
+                                        <p>Direction: {weatherData.wind.deg}°</p>
+                                    </div>
+                                    <div class="column">
+                                        <h2 class="title is-4">Temperature:</h2>
+                                        <p>{weatherData.main.temp} °K</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {/if}
                     </div>
                     {#if event.image}
                         <div class="column">
@@ -60,3 +84,14 @@
         {/if}
     </div>
 </main>
+
+<button on:click={deleteEvent} class="button is-danger">
+    <i class="fas fa-trash" style="margin-right: 5px;"></i>
+    <span style="font-weight: normal;">Danger</span>
+</button>
+
+<style>
+    .weather-box {
+        border: 2px solid purple;
+    }
+</style>
