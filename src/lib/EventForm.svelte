@@ -86,12 +86,12 @@
                                     </div>
                                     <div class="column">
                                         <h2 class="title is-4">Wind:</h2>
-                                        <p>Speed: {weatherData.current.speed} m/s</p>
+                                        <p>Speed: {reading.wind_speed} m/s</p>
                                         <p>Direction: {reading.wind_deg}°</p>
                                     </div>
                                     <div class="column">
                                         <h2 class="title is-4">Temperature:</h2>
-                                        <p>{reading.temp} °K</p>
+                                        <p>{reading.temp} °C</p>
                                     </div>
                                 </div>
                             </div>
