@@ -5,10 +5,15 @@
     import {placemarkService} from "../services/placemark-service.js";
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
+    import WeatherChart from "$lib/WeatherChart.svelte";
 
     import { fetchWeather } from "../services/weather-service.js";
     let event;
     let weatherData;
+    let report = {};
+    let reading;
+
+    let viewData;
 
     onMount(async () => {
         event = await placemarkService.getEvent($page.params.eventId);
@@ -16,6 +21,28 @@
         if (event) {
             weatherData = await fetchWeather(event.lat, event.lon);
 
+            if (weatherData){
+                reading = weatherData.current;
+                report.code = reading.weather[0].id;
+                report.temperature = reading.temp;
+                report.windSpeed = reading.wind_speed;
+                report.pressure = reading.pressure;
+                report.windDirection = reading.wind_deg;
+
+                report.tempTrend = [];
+                report.trendLabels = [];
+                const trends = weatherData.daily;
+                for (let i=0; i<trends.length; i++) {
+                    report.tempTrend.push(trends[i].temp.day);
+                    const date = new Date(trends[i].dt * 1000);
+                    report.trendLabels.push(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` );
+                }
+            }
+
+            viewData = {
+                title: "Weather Report",
+                reading: report
+            };
         }
     });
 
@@ -24,7 +51,6 @@
         const date = new Date(dateString);
         return date.toLocaleDateString('de-DE', options);
     }
-
 
     async function deleteEvent() {
         if (confirm("Delete Event?")) {
@@ -36,9 +62,7 @@
             }
         }
     }
-
 </script>
-
 
 <main class="box" style="padding: 50px;">
     <div class="container">
@@ -53,17 +77,17 @@
                             <div class="box weather-box">
                                 <div class="columns">
                                     <div class="column">
-                                        <h2 class="title is-4">{weatherData.weather[0].description}</h2>
-                                        <img src="http://openweathermap.org/img/wn/{weatherData.weather[0].icon}@2x.png">
+                                        <h2 class="title is-4">{reading.weather[0].description}</h2>
+                                        <img src="http://openweathermap.org/img/wn/{reading.weather[0].icon}@2x.png">
                                     </div>
                                     <div class="column">
                                         <h2 class="title is-4">Wind:</h2>
-                                        <p>Speed: {weatherData.wind.speed} m/s</p>
-                                        <p>Direction: {weatherData.wind.deg}°</p>
+                                        <p>Speed: {reading.wind_speed} m/s</p>
+                                        <p>Direction: {reading.wind_deg}°</p>
                                     </div>
                                     <div class="column">
                                         <h2 class="title is-4">Temperature:</h2>
-                                        <p>{weatherData.main.temp} °K</p>
+                                        <p>{reading.temp} °C</p>
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +107,12 @@
             <p>Load Event...</p>
         {/if}
     </div>
+
+    <div class="box" id="weather-trend-box">
+        {#if event && weatherData}
+            <WeatherChart {viewData} />
+        {/if}
+    </div>
 </main>
 
 <button on:click={deleteEvent} class="button is-danger">
@@ -93,5 +123,9 @@
 <style>
     .weather-box {
         border: 2px solid purple;
+    }
+
+    #weather-trend-box {
+        margin-top: 50px;
     }
 </style>
