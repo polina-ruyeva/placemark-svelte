@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="column">
                                         <h2 class="title is-4">Temperature:</h2>
-                                        <p class="subtitle">{weatherData.main.temp} °K</p>
+                                        <p>{weatherData.main.temp} °K</p>
                                     </div>
                                 </div>
                             </div>
