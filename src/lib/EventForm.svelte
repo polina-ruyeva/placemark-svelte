@@ -21,8 +21,6 @@
         if (event) {
             weatherData = await fetchWeather(event.lat, event.lon);
 
-            console.log(weatherData);
-
             if (weatherData){
                 reading = weatherData.current;
                 report.code = reading.weather[0].id;
@@ -40,8 +38,6 @@
                     report.trendLabels.push(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}` );
                 }
             }
-
-            console.log(report);
 
             viewData = {
                 title: "Weather Report",
