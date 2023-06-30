@@ -58,6 +58,16 @@
         border-radius: 4px;
         margin-bottom: 0.5rem;
     }
+
+    .tile.is-ancestor {
+        flex-wrap: wrap;
+    }
+
+    .tile.is-parent {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+        box-sizing: border-box;
+    }
 </style>
 
 <h1 class="title">Events</h1>
