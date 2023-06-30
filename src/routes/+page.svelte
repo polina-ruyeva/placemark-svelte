@@ -10,7 +10,6 @@
     let userLoggedIn = false;
 
     onMount(() => {
-        console.log(localStorage);
         if (localStorage.cred) {
             goto('/map');
         }
