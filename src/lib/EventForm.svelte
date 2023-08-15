@@ -1,4 +1,5 @@
 <script>
+    // @ts-nocheck
     import { onMount } from "svelte";
     import { page } from "$app/stores";
 
@@ -6,6 +7,7 @@
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
     import WeatherChart from "$lib/WeatherChart.svelte";
+    import UploadWidget from "$lib/UploadWidget.svelte";
 
     import { fetchWeather } from "../services/weather-service.js";
     let event;
@@ -98,6 +100,7 @@
                             <figure class="image">
                                 <img class="event-image" src="{event.image}" alt="Event Image">
                             </figure>
+                            <UploadWidget />
                         </div>
                     {/if}
                 </div>
