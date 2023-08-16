@@ -105,5 +105,18 @@ export const placemarkService = {
         } catch (error) {
             return [];
         }
+    },
+
+    async addImageToEvent(eventId, image) {
+        try {
+            console.log("image:");
+            //const response = await axios.post(this.baseUrl + "/api/" + eventId + "/images/", image);
+            const response = await axios.post(`${this.baseUrl}/api/events/${eventId}/images`,{ image });
+            console.log("resp:");
+            return response.data;
+        } catch (error) {
+            return [];
+        }
     }
+
 };

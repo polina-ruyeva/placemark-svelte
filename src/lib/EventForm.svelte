@@ -100,7 +100,7 @@
                             <figure class="image">
                                 <img class="event-image" src="{event.image}" alt="Event Image">
                             </figure>
-                            <UploadWidget />
+                            <UploadWidget eventid={event._id}/>
                         </div>
                     {/if}
                 </div>
