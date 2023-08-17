@@ -11,6 +11,8 @@
     import Carousel from 'svelte-carousel'
     import ImageSlide from "$lib/ImageSlide.svelte";
 
+    import "@fontsource/roboto-mono"
+
     import { fetchWeather } from "../services/weather-service.js";
     let event;
     let weatherData;
@@ -66,12 +68,21 @@
             }
         }
     }
+
 </script>
+
 
 <main class="box" style="padding: 50px;">
     <div class="container">
         {#if event}
-            <h1 class="title">{event.name}</h1>
+            <h1 class="custom-heading">{event.name}</h1>
+            <div class="event-carousel">
+                <Carousel autoplay autoplayDuration={5000} arrows={false}>
+                    {#each event.image as imageUrl (imageUrl)}
+                        <ImageSlide image="{imageUrl}" />
+                    {/each}
+                </Carousel>
+            </div>
             <div class="content">
                 <div class="columns">
                     <div class="column is-three-fifths">
@@ -100,13 +111,7 @@
                 </div>
                 <PlacemarkMap {event} key={event._id} />
 
-                <div class="event-carousel">
-                    <Carousel autoplay autoplayDuration={5000}>
-                        {#each event.image as imageUrl (imageUrl)}
-                            <ImageSlide image="{imageUrl}" />
-                        {/each}
-                    </Carousel>
-                </div>
+
                 <UploadWidget eventid={event._id}/>
             </div>
         {:else}
@@ -123,12 +128,25 @@
     </div>
 </main>
 
+
 <button on:click={deleteEvent} class="button is-danger">
     <i class="fas fa-trash" style="margin-right: 5px;"></i>
     <span style="font-weight: normal;">Danger</span>
 </button>
 
 <style>
+
+    @font-face {
+        font-family: 'RobotoMono-Regular';
+        src: url('../../static/fonts/RobotoMono-Regular.ttf') format('truetype');
+    }
+
+
+    .custom-heading {
+        font-family: "Roboto Mono" ,sans-serif;
+        font-size: 60px;
+    }
+
     .weather-box {
         border: 2px solid purple;
     }

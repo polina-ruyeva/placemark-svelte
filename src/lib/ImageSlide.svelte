@@ -12,11 +12,13 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 100%;
+        height: 450px;
     }
 
     .image-slide img {
         max-width: 100%;
-        max-height: 100%;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
     }
 </style>
