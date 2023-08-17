@@ -8,6 +8,8 @@
     import {goto} from "$app/navigation";
     import WeatherChart from "$lib/WeatherChart.svelte";
     import UploadWidget from "$lib/UploadWidget.svelte";
+    import Carousel from 'svelte-carousel'
+    import ImageSlide from "$lib/ImageSlide.svelte";
 
     import { fetchWeather } from "../services/weather-service.js";
     let event;
@@ -95,21 +97,24 @@
                             </div>
                         {/if}
                     </div>
-                    {#if event.image}
-                        <div class="column">
-                            <figure class="image">
-                                <img class="event-image" src="{event.image}" alt="Event Image">
-                            </figure>
-                            <UploadWidget eventid={event._id}/>
-                        </div>
-                    {/if}
                 </div>
                 <PlacemarkMap {event} key={event._id} />
+
+                <div class="event-carousel">
+                    <Carousel autoplay autoplayDuration={5000}>
+                        {#each event.image as imageUrl (imageUrl)}
+                            <ImageSlide image="{imageUrl}" />
+                        {/each}
+                    </Carousel>
+                </div>
+                <UploadWidget eventid={event._id}/>
             </div>
         {:else}
             <p>Load Event...</p>
         {/if}
     </div>
+
+
 
     <div class="box" id="weather-trend-box">
         {#if event && weatherData}
