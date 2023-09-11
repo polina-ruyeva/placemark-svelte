@@ -73,8 +73,15 @@
 <main class="box" style="padding: 50px;">
     <div class="container">
         {#if event}
-            <h1 class="custom-heading" >{event.name}</h1>
-            <p class="subtitle">{formatDate(event.date)}</p>
+            <div class="columns is-multiline">
+                <div class="column is-8">
+                    <h1 class="custom-heading">{event.name}</h1>
+                    <p class="subtitle">{formatDate(event.date)}</p>
+                </div>
+                <div class="column is-4 has-text-right">
+                    <UploadWidget eventid={event._id}/>
+                </div>
+            </div>
             <div class="event-carousel">
                 <Carousel autoplay autoplayDuration={5000} arrows={false}>
                     {#each event.image as imageUrl (imageUrl)}
@@ -129,9 +136,6 @@
                     </div>
                 </div>
             {/if}
-
-            <UploadWidget eventid={event._id}/>
-
         {:else}
             <p>Load Event...</p>
         {/if}
