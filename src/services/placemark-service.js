@@ -3,8 +3,8 @@ import axios from "axios";
 import { user } from "../stores"
 
 export const placemarkService = {
-    //baseUrl: "http://pandapc:3000",
-    baseUrl: "https://placemark-hapi-nsne.onrender.com",
+    baseUrl: "http://pandapc:3000",
+    //baseUrl: "https://placemark-hapi-nsne.onrender.com",
 
     async login(email, password) {
         try {
@@ -105,5 +105,18 @@ export const placemarkService = {
         } catch (error) {
             return [];
         }
+    },
+
+    async addImageToEvent(eventId, image) {
+        try {
+            console.log("image:");
+            //const response = await axios.post(this.baseUrl + "/api/" + eventId + "/images/", image);
+            const response = await axios.post(`${this.baseUrl}/api/events/${eventId}/images`,{ image });
+            console.log("resp:");
+            return response.data;
+        } catch (error) {
+            return [];
+        }
     }
+
 };

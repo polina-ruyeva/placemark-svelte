@@ -1,4 +1,5 @@
 <script>
+    // @ts-nocheck
     import { onMount } from "svelte";
     import { page } from "$app/stores";
 
@@ -6,6 +7,9 @@
     import PlacemarkMap from "$lib/PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
     import WeatherChart from "$lib/WeatherChart.svelte";
+    import UploadWidget from "$lib/UploadWidget.svelte";
+    import Carousel from 'svelte-carousel'
+    import ImageSlide from "$lib/ImageSlide.svelte";
 
     import { fetchWeather } from "../services/weather-service.js";
     let event;
@@ -62,58 +66,90 @@
             }
         }
     }
+
 </script>
+
 
 <main class="box" style="padding: 50px;">
     <div class="container">
         {#if event}
-            <h1 class="title">{event.name}</h1>
-            <div class="content">
-                <div class="columns">
-                    <div class="column is-three-fifths">
-                        <p class="subtitle">{formatDate(event.date)}</p>
-                        <p>{event.description}</p>
-                        {#if event && weatherData}
-                            <div class="box weather-box">
-                                <div class="columns">
-                                    <div class="column">
-                                        <h2 class="title is-4">{reading.weather[0].description}</h2>
-                                        <img src="http://openweathermap.org/img/wn/{reading.weather[0].icon}@2x.png">
-                                    </div>
-                                    <div class="column">
-                                        <h2 class="title is-4">Wind:</h2>
-                                        <p>Speed: {reading.wind_speed} m/s</p>
-                                        <p>Direction: {reading.wind_deg}°</p>
-                                    </div>
-                                    <div class="column">
-                                        <h2 class="title is-4">Temperature:</h2>
-                                        <p>{reading.temp} °C</p>
-                                    </div>
+            <div class="columns is-multiline">
+                <div class="column is-8">
+                    <h1 class="custom-heading">{event.name}</h1>
+                    <p class="subtitle">{formatDate(event.date)}</p>
+                </div>
+                <div class="column is-4 has-text-right">
+                    <UploadWidget eventid={event._id}/>
+                </div>
+            </div>
+            <div class="event-carousel">
+                <Carousel autoplay autoplayDuration={5000} arrows={false}>
+                    {#each event.image as imageUrl (imageUrl)}
+                        <ImageSlide image="{imageUrl}" />
+                    {/each}
+                </Carousel>
+            </div>
+            <div class="columns mr-4 ml-4 mt-6">
+                <div class="column is-one-third">
+                    <h1 class="custom-heading">ABOUT</h1>
+                </div>
+                <div class="column is-two-thirds">
+                    <div class="column">
+                        <p class="description-container">{event.description}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns mr-6 mt-6 mb-6">
+                <div class="column is-two-thirds">
+                    <PlacemarkMap {event} key={event._id} />
+                </div>
+
+                <div class="column is-one-third has-text-right ">
+                    <h1 class="custom-heading">WHERE?</h1>
+                </div>
+            </div>
+
+            {#if event && weatherData}
+                <div class="columns ml-4 mt-6">
+                    <div class="column is-one-third">
+                        <h1 class="custom-heading">WEATHER RIGHT NOW</h1>
+                    </div>
+                    <div class="column is-two-thirds">
+                        <div class="box weather-box">
+                            <div class="columns">
+                                <div class="column">
+                                    <h2 class="title is-4">{reading.weather[0].description}</h2>
+                                    <img src="http://openweathermap.org/img/wn/{reading.weather[0].icon}@2x.png">
+                                </div>
+                                <div class="column">
+                                    <h2 class="title is-4">Wind:</h2>
+                                    <p>Speed: {reading.wind_speed} m/s</p>
+                                    <p>Direction: {reading.wind_deg}°</p>
+                                </div>
+                                <div class="column">
+                                    <h2 class="title is-4">Temperature:</h2>
+                                    <p>{reading.temp} °C</p>
                                 </div>
                             </div>
-                        {/if}
-                    </div>
-                    {#if event.image}
-                        <div class="column">
-                            <figure class="image">
-                                <img class="event-image" src="{event.image}" alt="Event Image">
-                            </figure>
                         </div>
-                    {/if}
+                    </div>
                 </div>
-                <PlacemarkMap {event} key={event._id} />
-            </div>
+            {/if}
         {:else}
             <p>Load Event...</p>
         {/if}
     </div>
-
+    
     <div class="box" id="weather-trend-box">
         {#if event && weatherData}
             <WeatherChart {viewData} />
         {/if}
     </div>
+
+
 </main>
+
 
 <button on:click={deleteEvent} class="button is-danger">
     <i class="fas fa-trash" style="margin-right: 5px;"></i>
@@ -121,11 +157,26 @@
 </button>
 
 <style>
+    @import '../styles/fonts.css';
+
+
+    .custom-heading {
+        font-family: "RobotoMono-Regular", cursive;
+        font-size: 60px;
+    }
+
     .weather-box {
         border: 2px solid purple;
     }
 
     #weather-trend-box {
         margin-top: 50px;
+    }
+
+    .description-container {
+        font-family: "RobotoMono-Regular", cursive;
+        font-size: 15px;
+        text-align: left;
+        line-height: 2;
     }
 </style>

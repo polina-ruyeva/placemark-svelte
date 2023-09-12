@@ -3,6 +3,8 @@
     import { placemarkService } from "../services/placemark-service.js";
     import PlacemarkMap from "./PlacemarkMapList.svelte";
     import {goto} from "$app/navigation";
+    import Carousel from "svelte-carousel";
+    import ImageSlide from "$lib/ImageSlide.svelte";
     const dispatch = createEventDispatcher();
 
     let events = [];
@@ -46,33 +48,7 @@
 
 </script>
 
-<style>
-    .tile {
-        margin-bottom: 1rem;
-    }
-
-    .event-image {
-        width: 100%;
-        max-height: 200px;
-        object-fit: cover;
-        border-radius: 4px;
-        margin-bottom: 0.5rem;
-    }
-
-    .tile.is-ancestor {
-        flex-wrap: wrap;
-    }
-
-    .tile.is-parent {
-        flex: 0 0 33.33%;
-        max-width: 33.33%;
-        box-sizing: border-box;
-    }
-</style>
-
 <h1 class="title">Events</h1>
-
-
 
 <div class="field is-grouped">
     <div class="control">
@@ -105,15 +81,34 @@
                     </div>
                 </div>
                 <p class="subtitle">{formatDate(event.date)}</p>
-                {#if event.image}
-                    <figure class="image">
-                        <img class="event-image" src="{event.image}" alt="Event Image">
-                    </figure>
-                {/if}
                 <p>{event.description}</p>
                 <PlacemarkMap {event} key={event._id} />
             </article>
         </div>
     {/each}
 </div>
+
+<style>
+    .tile {
+        margin-bottom: 1rem;
+    }
+
+    .event-image {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+    }
+
+    .tile.is-ancestor {
+        flex-wrap: wrap;
+    }
+
+    .tile.is-parent {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+        box-sizing: border-box;
+    }
+</style>
 
