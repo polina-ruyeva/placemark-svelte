@@ -3,8 +3,7 @@ import axios from "axios";
 import { user } from "../stores"
 
 export const placemarkService = {
-    baseUrl: "http://pandapc:3000",
-    //baseUrl: "https://placemark-hapi-nsne.onrender.com",
+    baseUrl: "https://placemark-hapi-nsne.onrender.com",
 
     async login(email, password) {
         try {
